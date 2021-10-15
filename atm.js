@@ -1,7 +1,8 @@
 "use strict";
 const prompt = require("prompt-sync")();
-let {currentBalance, pin} = require("./account");
-
+const {pin} = require("./account");
+let {currentBalance} = require("./account");
+ 
 function getBalance(){
     return currentBalance;
 }
