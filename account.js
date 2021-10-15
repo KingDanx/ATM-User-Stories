@@ -1,3 +1,4 @@
+"use strict";
 let balance = 4321;
 let pin = 1234;
 

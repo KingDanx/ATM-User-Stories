@@ -1,3 +1,4 @@
+"use strict";
 const {currentBalance, pin} = require("./account");
 
 function getBalance(){
@@ -10,7 +11,25 @@ function deposit(num){
     return currentBalance += num;
 }
 function validatePin(){
-    return pin;
+    let access = false;
+    let tries = 3;
+    
+    while(tries !== 0){
+        let userInput = prompt();
+        if(userInput != pin){
+            console.log(`Incorrect pin, ${tries} remaining`);
+            tries--; 
+        }
+        else if(userInput == pin){
+            access = true;
+            return access
+        }
+    }
+    if(tries === 0){
+        console.log("The Police are on the way!");
+        return false;
+    }
+
 }
 
 module.exports = {
@@ -18,6 +37,5 @@ module.exports = {
     withdraw: withdraw,
     deposit: deposit,
     validatePin: validatePin,
-    currentBalance: currentBalance,
     pin: pin
 };

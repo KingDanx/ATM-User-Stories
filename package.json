@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/KingDanx/ATM-User-Stories/issues"
   },
-  "homepage": "https://github.com/KingDanx/ATM-User-Stories#readme"
+  "homepage": "https://github.com/KingDanx/ATM-User-Stories#readme",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
 }
