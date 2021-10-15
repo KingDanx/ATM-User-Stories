@@ -1,21 +1,23 @@
-const {currentBalance, pin} = requires(".account");
+const {currentBalance, pin} = require("./account");
 
 function getBalance(){
-
+    return currentBalance;
 }
-function withdraw(){
-
+function withdraw(num){
+    return currentBalance -= num;
 }
-function deposit(){
-
+function deposit(num){
+    return currentBalance += num;
 }
 function validatePin(){
-
+    return pin;
 }
 
-module.export = {
+module.exports = {
     balance: getBalance,
     withdraw: withdraw,
     deposit: deposit,
-    validatePin: validatePin
+    validatePin: validatePin,
+    currentBalance: currentBalance,
+    pin: pin
 };

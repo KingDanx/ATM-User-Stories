@@ -1,5 +1,7 @@
-let balance;
+let balance = 4321;
+let pin = 1234;
 
-module.export = {
-    currentBalance: balance
+module.exports = {
+    currentBalance: balance,
+    pin: pin
 }
