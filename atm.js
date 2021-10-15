@@ -19,31 +19,32 @@ function deposit(num){
 }
 function validatePin(){
     let access = false;
-    let tries = 3;
+    let tries = 4;
     let userInput = prompt();
-    notANumber(userInput);
     while(tries !== 0){
+        notANumber(userInput);
         if(userInput != pin){
-            console.log(`Incorrect pin, ${tries} attempts remaining\n`);
+            if(tries -1 !== 0){
+                console.log(`Incorrect pin, ${tries - 1} attempts remaining\n`);
+            }
             userInput = prompt();
-            tries--; 
+            tries--;
         }
-        else if(userInput == pin){
+        if(userInput == pin){
             access = true;
             return access
         }
+        if(tries - 1 === 0){
+            console.log("The Police are on the way!");
+            return false;
+        }
     }
-    if(tries === 0){
-        console.log("The Police are on the way!");
-        return false;
-    }
-
 }
 
 function notANumber(ui){
     while(isNaN(ui)){
         console.log(`${ui} is not a number. Try again\n`);
-        ui = prompt();
+        ui = prompt();  
     }
     return ui;
 }
