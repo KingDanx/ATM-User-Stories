@@ -1,4 +1,5 @@
 "use strict";
+const prompt = require("prompt-sync")();
 const {currentBalance, pin} = require("./account");
 
 function getBalance(){
@@ -12,12 +13,16 @@ function deposit(num){
 }
 function validatePin(){
     let access = false;
-    let tries = 3;
+    let tries = 4;
     
     while(tries !== 0){
         let userInput = prompt();
+        while(isNaN(userInput)){
+            console.log(`${userInput} is not a number.  Enter your pin number,\n`);
+            userInput = prompt();
+        }
         if(userInput != pin){
-            console.log(`Incorrect pin, ${tries} remaining`);
+            console.log(`Incorrect pin, ${tries - 1} attempts remaining\n`);
             tries--; 
         }
         else if(userInput == pin){
