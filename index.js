@@ -14,7 +14,7 @@ function access(){
 }
 
 function mainMenu(){
-    console.log("\nPress '1' to see your current balance \nPress '2' to withdraw \nPress '3' to depsoit \nPress '4' to restart \nPress '5' to quit");
+    console.log("\nPress '1' to see your current balance \nPress '2' to withdraw \nPress '3' to depsoit \nPress '4' to restart \nPress '5' to quit\n");
     let userInput = prompt();
     switch (userInput) {
         case '1':
@@ -22,14 +22,14 @@ function mainMenu(){
             mainMenu();
             break;
         case '2':
-            console.log(`Enter amount you would like to withdraw.`);
+            console.log(`\nEnter amount you would like to withdraw.`);
             let withdrawAmount = prompt();
             withdraw(notANumber(parseInt(withdrawAmount)));
             logCurrentBal();
             mainMenu();
             break;
         case '3':
-            console.log(`Enter the amount you would like to deposit.`);
+            console.log(`\nEnter the amount you would like to deposit.`);
             let depositAmount = prompt();
             deposit(notANumber(parseInt(depositAmount)));;
             logCurrentBal();
