@@ -1,9 +1,10 @@
 "use strict";
 const prompt = require("prompt-sync")();
+let {wallet} = require("./wallet");
 const {balance, withdraw, deposit, validatePin, notANumber} = require("./atm");
 
 function access(){
-    console.log("Welcome to the ATM. \nEnter your pin number");
+    console.log("\nWelcome to the ATM. \nEnter your pin number\n");
     if(validatePin() === false){
         console.log("RUN\n");
         access();
@@ -22,16 +23,13 @@ function mainMenu(){
             mainMenu();
             break;
         case '2':
-            console.log(`\nEnter amount you would like to withdraw.`);
-            let withdrawAmount = prompt();
-            withdraw(notANumber(parseInt(withdrawAmount)));
+           
+            withdraw(notANumber(parseInt(walletWithdraw())));
             logCurrentBal();
             mainMenu();
             break;
         case '3':
-            console.log(`\nEnter the amount you would like to deposit.`);
-            let depositAmount = prompt();
-            deposit(notANumber(parseInt(depositAmount)));;
+            deposit(notANumber(walletDepo(wallet)));;
             logCurrentBal();
             mainMenu();
             break;
@@ -49,6 +47,39 @@ function mainMenu(){
 
 function logCurrentBal(){
     console.log(`\nCurrent Balance: $${balance()}`);
+}
+
+function walletDepo(){
+    console.log(`\nYou have $${wallet} in your wallet. How much would you like to desposit?`);
+    let depositAmount = prompt();
+    depositAmount = notANumber(depositAmount);
+    depositAmount = parseInt(depositAmount);
+   
+    while(depositAmount > wallet){
+        console.log(`\nInsufficient funds. Try again.`);
+        depositAmount = prompt();
+        depositAmount = parseInt(depositAmount);
+    }
+    wallet -= depositAmount;
+    console.log(`\nYou deposit $${depositAmount} and now have $${wallet} remaining in your wallet.`);
+    return depositAmount;
+}
+
+function walletWithdraw(){
+    console.log(`\nYou have $${wallet} in your wallet. How much would you like to withdraw?`);    
+    console.log(`\nEnter amount you would like to withdraw.`);
+    let withdrawAmount = prompt();
+    withdrawAmount = notANumber(withdrawAmount);
+    withdrawAmount = parseInt(withdrawAmount);
+    if(withdrawAmount < balance()){
+        wallet += withdrawAmount;
+        console.log(`\nYou withdraw $${withdrawAmount} from the ATM.  You now have $${wallet} in your wallet.`);
+    }
+    else{
+        console.log(`\nInsufficient funds, transaction aborted.`);
+        mainMenu();
+    }
+    return withdrawAmount;
 }
 
 access();

@@ -6,17 +6,15 @@ let {currentBalance} = require("./account");
 function getBalance(){
     return currentBalance;
 }
+
 function withdraw(num){
-    currentBalance -= num;
-    if(currentBalance < 0){
-        console.log(`\nInsufficient funds, transaction aborted.`);
-        return currentBalance += num;
-    }
-    return currentBalance;
+     return currentBalance -= num;
 }
-function deposit(num){
-    return currentBalance += num;
+
+function deposit(wallet){
+    return currentBalance += wallet;
 }
+
 function validatePin(){
     let access = false;
     let tries = 4;
@@ -35,7 +33,7 @@ function validatePin(){
             return access
         }
         if(tries - 1 === 0){
-            console.log("The Police are on the way!");
+            console.log("\n1234The Police are on the way!");
             return false;
         }
     }
@@ -55,4 +53,4 @@ module.exports = {
     deposit: deposit,
     validatePin: validatePin,
     notANumber: notANumber,
-};
+}
