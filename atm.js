@@ -1,28 +1,30 @@
 "use strict";
 const prompt = require("prompt-sync")();
-const {currentBalance, pin} = require("./account");
+let {currentBalance, pin} = require("./account");
 
 function getBalance(){
     return currentBalance;
 }
 function withdraw(num){
-    return currentBalance -= num;
+    currentBalance -= num;
+    if(currentBalance < 0){
+        console.log(`\nInsufficient funds, transaction aborted.`);
+        return currentBalance += num;
+    }
+    return currentBalance;
 }
 function deposit(num){
     return currentBalance += num;
 }
 function validatePin(){
     let access = false;
-    let tries = 4;
-    
+    let tries = 3;
+    let userInput = prompt();
+    notANumber(userInput);
     while(tries !== 0){
-        let userInput = prompt();
-        while(isNaN(userInput)){
-            console.log(`${userInput} is not a number.  Enter your pin number,\n`);
-            userInput = prompt();
-        }
         if(userInput != pin){
-            console.log(`Incorrect pin, ${tries - 1} attempts remaining\n`);
+            console.log(`Incorrect pin, ${tries} attempts remaining\n`);
+            userInput = prompt();
             tries--; 
         }
         else if(userInput == pin){
@@ -37,10 +39,18 @@ function validatePin(){
 
 }
 
+function notANumber(ui){
+    while(isNaN(ui)){
+        console.log(`${ui} is not a number. Try again\n`);
+        ui = prompt();
+    }
+    return ui;
+}
+
 module.exports = {
     balance: getBalance,
     withdraw: withdraw,
     deposit: deposit,
     validatePin: validatePin,
-    pin: pin
+    notANumber: notANumber,
 };
