@@ -36,7 +36,7 @@ function mainMenu(){
             mainMenu();
             break;
         case '4':
-            access(balance);
+            access();
             break;
         case '5':
             break;
