@@ -1,16 +1,27 @@
 "use strict";
 const prompt = require("prompt-sync")();
 let {wallet} = require("./wallet");
-const {balance, withdraw, deposit, validatePin, notANumber} = require("./atm");
+const {balance, withdraw, deposit, validatePin} = require("./atm");
 
 function access(){
     console.log("\nWelcome to the ATM. \nEnter your pin number\n");
-    if(validatePin() === false){
-        console.log("RUN\n");
-        access();
-    }
-    else{
-        mainMenu();
+    let userInput = prompt();
+    for(let i = 3; i >= 0; i--){
+        notANumber(userInput);
+        if(validatePin(userInput) === false){
+            if(i !== 0){
+                console.log(`Incorrect pin, ${i} attempts remaining\n`);
+                userInput = prompt();
+            }
+        }
+        if(i === 0){
+            console.log("\nThe Police are on the way!");
+            access();
+        }
+        if(validatePin(userInput) === true){
+            mainMenu();
+            break;
+        }
     }
 }
 
@@ -23,7 +34,6 @@ function mainMenu(){
             mainMenu();
             break;
         case '2':
-           
             withdraw(notANumber(parseInt(walletWithdraw())));
             logCurrentBal();
             mainMenu();
@@ -71,7 +81,7 @@ function walletWithdraw(){
     let withdrawAmount = prompt();
     withdrawAmount = notANumber(withdrawAmount);
     withdrawAmount = parseInt(withdrawAmount);
-    if(withdrawAmount < balance()){
+    if(withdrawAmount <= balance()){
         wallet += withdrawAmount;
         console.log(`\nYou withdraw $${withdrawAmount} from the ATM.  You now have $${wallet} in your wallet.`);
     }
@@ -80,6 +90,14 @@ function walletWithdraw(){
         mainMenu();
     }
     return withdrawAmount;
+}
+
+function notANumber(ui){
+    while(isNaN(ui)){
+        console.log(`${ui} is not a number. Try again\n`);
+        ui = prompt();  
+    }
+    return ui;
 }
 
 access();
